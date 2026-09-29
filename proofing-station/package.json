@@ -1,0 +1,32 @@
+{
+  "name": "proofing-station",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "check": "svelte-check --tsconfig ./tsconfig.app.json && tsc -p tsconfig.node.json",
+    "test:assets": "bash scripts/prepare-test-assets.sh",
+    "test:engine": "esbuild scripts/verify-engine.mts --bundle --platform=node --format=esm --loader:.wasm=base64 --outfile=/tmp/softproof-verify.mjs && node /tmp/softproof-verify.mjs",
+    "test:e2e": "vite build && vite preview --port 4173 & SERVER=$!; sleep 3; tsx scripts/e2e-browser.mts; kill $SERVER"
+  },
+  "devDependencies": {
+    "@sveltejs/vite-plugin-svelte": "^7.3.0",
+    "@tsconfig/svelte": "^5.0.8",
+    "@types/node": "^24.13.3",
+    "@types/pako": "^2.0.4",
+    "playwright": "^1.63.0",
+    "svelte": "^5.57.0",
+    "svelte-check": "^4.7.6",
+    "tsx": "^4.23.15",
+    "typescript": "~6.0.2",
+    "vite": "^8.3.0"
+  },
+  "dependencies": {
+    "lcms-wasm": "^1.0.5",
+    "pako": "^3.0.2",
+    "upng-js": "^2.1.0"
+  }
+}
